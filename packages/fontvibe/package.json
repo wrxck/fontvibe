@@ -1,6 +1,6 @@
 {
   "name": "fontvibe",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Universal dev-tool for font management — detect, search, swap, pair, and export fonts",
   "type": "module",
   "bin": {
@@ -10,7 +10,7 @@
     "cli.js"
   ],
   "dependencies": {
-    "@matthesketh/fontvibe": "0.1.1"
+    "@matthesketh/fontvibe": "0.1.2"
   },
   "keywords": [
     "fonts",
@@ -24,6 +24,6 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heskethwebdesign/fontvibe.git"
+    "url": "git+https://github.com/wrxck/fontvibe.git"
   }
 }
