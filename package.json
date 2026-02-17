@@ -1,13 +1,13 @@
 {
   "name": "@matthesketh/fontvibe",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Universal dev-tool for font management — detect, search, swap, pair, and export fonts with a floating panel and MCP support",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "fontvibe": "./dist/cli.js"
+    "fontvibe": "dist/cli.js"
   },
   "exports": {
     ".": {
@@ -44,7 +44,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heskethwebdesign/fontvibe.git"
+    "url": "git+https://github.com/wrxck/fontvibe.git"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.26.0",
