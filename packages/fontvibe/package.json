@@ -1,0 +1,29 @@
+{
+  "name": "fontvibe",
+  "version": "0.1.1",
+  "description": "Universal dev-tool for font management — detect, search, swap, pair, and export fonts",
+  "type": "module",
+  "bin": {
+    "fontvibe": "cli.js"
+  },
+  "files": [
+    "cli.js"
+  ],
+  "dependencies": {
+    "@matthesketh/fontvibe": "0.1.1"
+  },
+  "keywords": [
+    "fonts",
+    "google-fonts",
+    "font-management",
+    "dev-tools",
+    "mcp",
+    "font-pairing"
+  ],
+  "author": "Matt Hesketh <matt@heskethwebdesign.co.uk>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heskethwebdesign/fontvibe.git"
+  }
+}
