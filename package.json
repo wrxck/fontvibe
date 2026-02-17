@@ -1,6 +1,6 @@
 {
   "name": "@matthesketh/fontvibe",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Universal dev-tool for font management — detect, search, swap, pair, and export fonts with a floating panel and MCP support",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -59,12 +59,6 @@
     "@types/prompts": "2.4.9",
     "@types/react": "19.1.2"
   },
-  "peerDependencies": {
-    "react": "19.0.0"
-  },
-  "peerDependenciesMeta": {
-    "react": {
-      "optional": true
-    }
-  }
+  "peerDependencies": {},
+  "peerDependenciesMeta": {}
 }
