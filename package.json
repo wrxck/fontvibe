@@ -1,0 +1,70 @@
+{
+  "name": "@matthesketh/fontvibe",
+  "version": "0.1.0",
+  "description": "Universal dev-tool for font management — detect, search, swap, pair, and export fonts with a floating panel and MCP support",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "fontvibe": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup --config tsup.config.cjs",
+    "dev": "tsup --config tsup.config.cjs --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "fonts",
+    "google-fonts",
+    "font-management",
+    "dev-tools",
+    "mcp",
+    "font-pairing"
+  ],
+  "author": "Matt Hesketh <matt@heskethwebdesign.co.uk>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heskethwebdesign/fontvibe.git"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.26.0",
+    "ws": "8.19.0",
+    "prompts": "2.4.2"
+  },
+  "devDependencies": {
+    "tsup": "8.5.1",
+    "typescript": "5.7.3",
+    "vitest": "4.0.18",
+    "@types/ws": "8.18.1",
+    "@types/prompts": "2.4.9",
+    "@types/react": "19.1.2"
+  },
+  "peerDependencies": {
+    "react": "19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  }
+}
