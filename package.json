@@ -1,6 +1,6 @@
 {
   "name": "@matthesketh/fontvibe",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Universal dev-tool for font management — detect, search, swap, pair, and export fonts with a floating panel and MCP support",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -49,7 +49,8 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.26.0",
     "ws": "8.19.0",
-    "prompts": "2.4.2"
+    "prompts": "2.4.2",
+    "zod": "3.24.2"
   },
   "devDependencies": {
     "tsup": "8.5.1",
@@ -58,6 +59,9 @@
     "@types/ws": "8.18.1",
     "@types/prompts": "2.4.9",
     "@types/react": "19.1.2"
+  },
+  "optionalDependencies": {
+    "puppeteer-core": "24.4.0"
   },
   "peerDependencies": {
     "react": "19.0.0"

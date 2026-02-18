@@ -6,6 +6,8 @@ import { detectFonts } from '../core/detector.js';
 import { applySwap, revertSwap, revertAllSwaps } from '../core/swapper.js';
 import { searchGoogleFonts } from '../core/google-fonts.js';
 import { suggestPairings } from '../core/pairings.js';
+import { analyseFonts } from '../core/analytics.js';
+import { saveTheme, listThemes, getTheme } from '../core/themes.js';
 import { resetState } from './state.js';
 
 let panelInstance: { host: HTMLElement; destroy: () => void } | null = null;
@@ -120,6 +122,28 @@ async function handleWsCommand(
 
     case 'suggest_pairings':
       return suggestPairings(payload.fontFamily as string, payload.category as string);
+
+    case 'get_analytics':
+      return analyseFonts();
+
+    case 'save_theme': {
+      const theme = saveTheme(payload.name as string, getState().activeSwaps);
+      return theme;
+    }
+
+    case 'list_themes':
+      return listThemes();
+
+    case 'apply_theme': {
+      const theme = getTheme(payload.themeId as string);
+      if (!theme) throw new Error(`theme not found: ${payload.themeId}`);
+      revertAllSwaps();
+      const swaps = theme.swaps.map(s =>
+        applySwap(s.originalFamily, s.newFamily, s.selectors, s.weight)
+      );
+      setState({ activeSwaps: swaps });
+      return swaps;
+    }
 
     default:
       throw new Error(`unknown command: ${msg.type}`);

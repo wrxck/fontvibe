@@ -1,10 +1,9 @@
-import type { DetectedFont, FontSwap } from '../../core/types.js';
+import type { DetectedFont, FontSwap, VariableFontInfo } from '../../core/types.js';
 
 export function renderFontList(
   fonts: DetectedFont[],
   swaps: FontSwap[],
-  onSwap: (family: string, selectors: string[]) => void,
-  onRevert: (swapId: string) => void,
+  variableFonts?: VariableFontInfo[],
 ): string {
   if (!fonts.length) {
     return '<div class="fv-empty">no fonts detected yet</div>';
@@ -20,36 +19,34 @@ export function renderFontList(
       ? `<button class="fv-btn fv-btn-danger" data-revert="${activeSwap.id}">Revert</button>`
       : `<button class="fv-btn fv-btn-secondary" data-swap-from="${font.family}" data-selectors="${font.selectors.join(',')}">Swap</button>`;
 
+    const varInfo = variableFonts?.find(v => v.family === font.family);
+    const axisHtml = varInfo ? `
+      <details style="margin-top: 4px;">
+        <summary style="font-size: 11px; color: #6c63ff; cursor: pointer;">variable axes</summary>
+        ${varInfo.axes.map(axis => `
+          <div class="fv-variable-axis">
+            <label>
+              <span>${axis.name} (${axis.tag})</span>
+              <span data-fv-axis-value="${font.family}-${axis.tag}">${axis.default}</span>
+            </label>
+            <input type="range"
+              min="${axis.min}" max="${axis.max}" value="${axis.default}" step="1"
+              data-fv-axis-family="${font.family}"
+              data-fv-axis-tag="${axis.tag}" />
+          </div>
+        `).join('')}
+      </details>
+    ` : '';
+
     return `
       <div class="fv-font-item">
-        <div>
+        <div style="flex: 1;">
           <div class="fv-font-name">${font.family} ${swapBadge}</div>
           <div class="fv-font-meta">${font.elementCount} elements · ${font.source}</div>
+          ${axisHtml}
         </div>
         <div class="fv-font-actions">${actions}</div>
       </div>
     `;
   }).join('');
-}
-
-export function bindFontListEvents(
-  container: HTMLElement,
-  onSwap: (family: string, selectors: string[]) => void,
-  onRevert: (swapId: string) => void,
-): void {
-  container.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-
-    const revertId = target.dataset.revert;
-    if (revertId) {
-      onRevert(revertId);
-      return;
-    }
-
-    const swapFrom = target.dataset.swapFrom;
-    if (swapFrom) {
-      const selectors = (target.dataset.selectors || '').split(',').filter(Boolean);
-      onSwap(swapFrom, selectors);
-    }
-  });
 }
