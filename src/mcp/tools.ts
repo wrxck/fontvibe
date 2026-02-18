@@ -97,6 +97,15 @@ export function createTools(apiKey: string): ToolDef[] {
       },
     },
     {
+      name: 'fontvibe_get_analytics',
+      description: 'Analyse font usage on the page — weights, sizes, unused declarations',
+      schema: z.object({}),
+      handler: async () => {
+        requireBrowser();
+        return sendToBrowser('get_analytics');
+      },
+    },
+    {
       name: 'fontvibe_suggest_pairings',
       description: 'Get font pairing suggestions, optionally filtered by font or category',
       schema: z.object({
@@ -108,6 +117,60 @@ export function createTools(apiKey: string): ToolDef[] {
           args.fontFamily as string | undefined,
           args.category as string | undefined,
         );
+      },
+    },
+    {
+      name: 'fontvibe_save_theme',
+      description: 'Save current font swaps as a named theme',
+      schema: z.object({
+        name: z.string().describe('theme name'),
+      }),
+      handler: async (args) => {
+        requireBrowser();
+        return sendToBrowser('save_theme', { name: args.name });
+      },
+    },
+    {
+      name: 'fontvibe_list_themes',
+      description: 'List all saved font themes',
+      schema: z.object({}),
+      handler: async () => {
+        requireBrowser();
+        return sendToBrowser('list_themes');
+      },
+    },
+    {
+      name: 'fontvibe_apply_theme',
+      description: 'Apply a saved theme by ID',
+      schema: z.object({
+        themeId: z.string().describe('theme ID to apply'),
+      }),
+      handler: async (args) => {
+        requireBrowser();
+        return sendToBrowser('apply_theme', { themeId: args.themeId });
+      },
+    },
+    {
+      name: 'fontvibe_import_figma',
+      description: 'Import font usage from a Figma file',
+      schema: z.object({
+        fileKey: z.string().describe('Figma file key'),
+        accessToken: z.string().describe('Figma personal access token'),
+      }),
+      handler: async (args) => {
+        const { fetchFigmaFonts } = await import('../core/figma.js');
+        return fetchFigmaFonts(args.fileKey as string, args.accessToken as string);
+      },
+    },
+    {
+      name: 'fontvibe_screenshot_diff',
+      description: 'Capture before/after screenshots of font changes',
+      schema: z.object({
+        url: z.string().describe('page URL to screenshot'),
+      }),
+      handler: async (args) => {
+        const { captureScreenshot } = await import('./screenshot.js');
+        return captureScreenshot(args.url as string);
       },
     },
   ];
