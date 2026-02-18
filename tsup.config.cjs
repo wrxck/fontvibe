@@ -9,7 +9,7 @@ const config = [
     dts: true,
     splitting: true,
     treeshake: true,
-    external: ['react', 'ws', '@modelcontextprotocol/sdk', 'prompts', 'node:fs', 'node:path', 'node:http'],
+    external: ['react', 'ws', '@modelcontextprotocol/sdk', 'prompts', 'zod', 'node:fs', 'node:path', 'node:http'],
     define: {
       'process.env.NODE_ENV': 'process.env.NODE_ENV',
     },

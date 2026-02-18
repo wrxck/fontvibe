@@ -61,10 +61,83 @@ export interface FontVibeState {
   detectedFonts: DetectedFont[];
   activeSwaps: FontSwap[];
   panelOpen: boolean;
-  activeTab: 'detected' | 'search';
+  activeTab: 'detected' | 'search' | 'pairings' | 'analytics' | 'themes' | 'about';
   searchQuery: string;
   searchResults: GoogleFont[];
   loading: boolean;
+  pickerActive: boolean;
+  pickerSelector: string | null;
+  canUndo: boolean;
+  canRedo: boolean;
+}
+
+export interface FontAnalytics {
+  family: string;
+  elementCount: number;
+  weights: string[];
+  sizes: string[];
+  selectors: string[];
+}
+
+export interface AnalyticsReport {
+  fonts: FontAnalytics[];
+  unusedFontFaces: string[];
+  totalElements: number;
+}
+
+export interface VariableAxis {
+  tag: string;
+  name: string;
+  min: number;
+  max: number;
+  default: number;
+}
+
+export interface VariableFontInfo {
+  family: string;
+  axes: VariableAxis[];
+}
+
+export interface A11yIssue {
+  type: 'thin-weight' | 'decorative-body' | 'small-size';
+  family: string;
+  selector: string;
+  message: string;
+  severity: 'warning' | 'error';
+}
+
+export interface FontPerfData {
+  family: string;
+  variantCount: number;
+  estimatedSize: number;
+  displayStrategy: string;
+  rating: 'green' | 'amber' | 'red';
+}
+
+export interface LocalFont {
+  family: string;
+  objectUrl: string;
+  fileName: string;
+}
+
+export interface HistoryEntry {
+  id: string;
+  swaps: FontSwap[];
+  timestamp: number;
+  label: string;
+}
+
+export interface FontTheme {
+  id: string;
+  name: string;
+  swaps: FontSwap[];
+  createdAt: number;
+}
+
+export interface FigmaFontUsage {
+  family: string;
+  style: string;
+  nodeCount: number;
 }
 
 export interface WsMessage {

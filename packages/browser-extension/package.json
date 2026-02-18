@@ -1,0 +1,15 @@
+{
+  "name": "@matthesketh/fontvibe-extension",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FontVibe browser extension — font management on any site",
+  "scripts": {
+    "build": "tsup src/content.ts src/popup.ts src/background.ts --format iife --out-dir dist --no-splitting"
+  },
+  "devDependencies": {
+    "tsup": "8.5.1",
+    "typescript": "5.7.3",
+    "@matthesketh/fontvibe": "0.1.2",
+    "@types/chrome": "0.0.307"
+  }
+}

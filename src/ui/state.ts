@@ -12,6 +12,10 @@ let state: FontVibeState = {
   searchQuery: '',
   searchResults: [],
   loading: false,
+  pickerActive: false,
+  pickerSelector: null,
+  canUndo: false,
+  canRedo: false,
 };
 
 export function getState(): FontVibeState {
@@ -37,6 +41,10 @@ export function resetState(): void {
     searchQuery: '',
     searchResults: [],
     loading: false,
+    pickerActive: false,
+    pickerSelector: null,
+    canUndo: false,
+    canRedo: false,
   };
   listeners.clear();
 }

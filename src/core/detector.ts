@@ -1,14 +1,8 @@
 import type { DetectedFont } from './types.js';
+import { selectorFor } from './selector.js';
 
 function normalizeFontFamily(raw: string): string {
   return raw.replace(/["']/g, '').trim();
-}
-
-function selectorFor(el: Element): string {
-  if (el.id) return `#${el.id}`;
-  const tag = el.tagName.toLowerCase();
-  const classes = Array.from(el.classList).slice(0, 2).join('.');
-  return classes ? `${tag}.${classes}` : tag;
 }
 
 function detectFromDocumentFonts(): Map<string, DetectedFont> {

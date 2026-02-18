@@ -1,4 +1,6 @@
 import type { GoogleFont } from '../../core/types.js';
+import { renderPreview } from './preview.js';
+import { googleFontUrl } from '../../core/google-fonts.js';
 
 export function renderSearchTab(
   query: string,
@@ -20,7 +22,8 @@ export function renderSearchTab(
   }
 
   const list = results.slice(0, 30).map(font => `
-    <div class="fv-font-item">
+    <link rel="preload" href="${googleFontUrl(font.family)}" as="style" />
+    <div class="fv-font-item" data-hover-preview="${font.family}">
       <div>
         <div class="fv-font-name">${font.family}</div>
         <div class="fv-font-meta">${font.category} · ${font.variants.length} variants</div>
@@ -29,31 +32,9 @@ export function renderSearchTab(
         <button class="fv-btn fv-btn-primary" data-apply-font="${font.family}">Apply</button>
       </div>
     </div>
+    ${renderPreview(font.family)}
   `).join('');
 
   return `${input}${list}`;
 }
 
-export function bindSearchEvents(
-  container: HTMLElement,
-  onSearch: (query: string) => void,
-  onApply: (family: string) => void,
-): void {
-  let debounceTimer: ReturnType<typeof setTimeout>;
-
-  container.addEventListener('input', (e) => {
-    const target = e.target as HTMLInputElement;
-    if (target.dataset.fvSearch !== undefined) {
-      clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(() => onSearch(target.value), 300);
-    }
-  });
-
-  container.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    const fontFamily = target.dataset.applyFont;
-    if (fontFamily) {
-      onApply(fontFamily);
-    }
-  });
-}
