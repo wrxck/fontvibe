@@ -2,6 +2,11 @@
 
 Universal dev-tool for font management. Detect fonts on any website, search Google Fonts, swap fonts live, get pairing suggestions, and export CSS. Works with any dev server (Vite, Next.js, etc.) and supports MCP for AI agent integration.
 
+<p align="center">
+  <img src=".github/assets/detected.png" alt="Detected fonts" width="380" />
+  <img src=".github/assets/search.png" alt="Font search with preview" width="380" />
+</p>
+
 ## Install
 
 ```bash
@@ -74,6 +79,16 @@ A Shadow DOM panel that sits on top of your page with six tabs:
 - **Analytics** — deep font usage analysis, unused `@font-face` detection, accessibility warnings, and performance ratings
 - **Themes** — save, load, and manage font theme presets via localStorage
 - **About** — author info and project links
+
+<p align="center">
+  <img src=".github/assets/pairings.png" alt="Font pairings" width="380" />
+  <img src=".github/assets/analytics.png" alt="Font analytics" width="380" />
+</p>
+
+<p align="center">
+  <img src=".github/assets/themes.png" alt="Theme presets" width="380" />
+  <img src=".github/assets/about.png" alt="About" width="380" />
+</p>
 
 ### Font Swapping
 
