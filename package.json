@@ -1,13 +1,13 @@
 {
-  "name": "@matthesketh/fontvibe",
-  "version": "0.2.0",
+  "name": "fontvibe",
+  "version": "0.3.0",
   "description": "Universal dev-tool for font management — detect, search, swap, pair, and export fonts with a floating panel and MCP support",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "fontvibe": "./dist/cli.js"
+    "fontvibe": "dist/cli.js"
   },
   "exports": {
     ".": {
@@ -27,7 +27,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup --config tsup.config.cjs",
-    "dev": "tsup --config tsup.config.cjs --watch",
+    "dev": "vite",
     "test": "vitest run",
     "test:watch": "vitest",
     "prepublishOnly": "npm run build"
@@ -48,17 +48,20 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.26.0",
-    "ws": "8.19.0",
     "prompts": "2.4.2",
+    "ws": "8.19.0",
     "zod": "3.24.2"
   },
   "devDependencies": {
+    "@types/prompts": "2.4.9",
+    "@types/react": "19.1.2",
+    "@types/ws": "8.18.1",
+    "happy-dom": "^20.6.3",
+    "playwright": "^1.58.2",
     "tsup": "8.5.1",
     "typescript": "5.7.3",
-    "vitest": "4.0.18",
-    "@types/ws": "8.18.1",
-    "@types/prompts": "2.4.9",
-    "@types/react": "19.1.2"
+    "vite": "6.3.5",
+    "vitest": "4.0.18"
   },
   "optionalDependencies": {
     "puppeteer-core": "24.4.0"

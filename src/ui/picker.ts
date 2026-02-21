@@ -12,7 +12,7 @@ function injectPickerStyles(): void {
   const style = document.createElement('style');
   style.id = PICKER_STYLE_ID;
   style.textContent = `
-    [${HIGHLIGHT_ATTR}] { outline: 2px solid #6c63ff !important; outline-offset: 2px !important; }
+    [${HIGHLIGHT_ATTR}] { outline: 2px solid #FCE205 !important; outline-offset: 2px !important; }
     body.fv-picker-active, body.fv-picker-active * { cursor: crosshair !important; }
   `;
   document.head.appendChild(style);

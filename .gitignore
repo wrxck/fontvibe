@@ -7,3 +7,4 @@ dist/
 .env
 .env.*
 packages/fontvibe/node_modules/
+scripts/

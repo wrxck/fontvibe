@@ -61,12 +61,13 @@ export interface FontVibeState {
   detectedFonts: DetectedFont[];
   activeSwaps: FontSwap[];
   panelOpen: boolean;
-  activeTab: 'detected' | 'search' | 'pairings' | 'analytics' | 'themes' | 'about';
+  activeTab: 'detected' | 'search' | 'pairings' | 'analytics' | 'themes' | 'about' | 'selected';
   searchQuery: string;
   searchResults: GoogleFont[];
   loading: boolean;
   pickerActive: boolean;
   pickerSelector: string | null;
+  pickedElement: PickedElementInfo | null;
   canUndo: boolean;
   canRedo: boolean;
 }
@@ -138,6 +139,19 @@ export interface FigmaFontUsage {
   family: string;
   style: string;
   nodeCount: number;
+}
+
+export interface PickedElementInfo {
+  selector: string;
+  fontFamily: string;
+  fontSize: string;
+  fontWeight: string;
+  fontStyle: string;
+  lineHeight: string;
+  letterSpacing: string;
+  color: string;
+  tagName: string;
+  textContent: string;
 }
 
 export interface WsMessage {

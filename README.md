@@ -3,14 +3,13 @@
 Universal dev-tool for font management. Detect fonts on any website, search Google Fonts, swap fonts live, get pairing suggestions, and export CSS. Works with any dev server (Vite, Next.js, etc.) and supports MCP for AI agent integration.
 
 <p align="center">
-  <img src=".github/assets/detected.png" alt="Detected fonts" width="380" />
-  <img src=".github/assets/search.png" alt="Font search with preview" width="380" />
+  <img src=".github/assets/hero.png" alt="FontVibe panel floating over a dev page" width="720" />
 </p>
 
 ## Install
 
 ```bash
-npm install @matthesketh/fontvibe
+npm install fontvibe
 ```
 
 ## Quick Start
@@ -32,7 +31,7 @@ This creates a `.fontviberc` file with your API key and preferences.
 **React:**
 
 ```tsx
-import { FontVibe } from '@matthesketh/fontvibe/react';
+import { FontVibe } from 'fontvibe/react';
 
 function App() {
   return (
@@ -47,7 +46,7 @@ function App() {
 **Vanilla JS:**
 
 ```ts
-import { fontvibe } from '@matthesketh/fontvibe';
+import { fontvibe } from 'fontvibe';
 
 fontvibe.mount({ apiKey: 'your-api-key' });
 ```
@@ -69,38 +68,65 @@ The panel automatically hides in production (`NODE_ENV=production`).
 
 ## Features
 
-### Floating Panel
+A Shadow DOM panel that sits on top of your page with seven tabs:
 
-A Shadow DOM panel that sits on top of your page with six tabs:
-
-- **Detected** — all fonts found via `document.fonts`, computed styles, and `@font-face` rules, with variable font axis sliders
-- **Search** — search Google Fonts with live preview on hover and apply in one click
-- **Pairings** — curated font pairing suggestions you can apply instantly
-- **Analytics** — deep font usage analysis, unused `@font-face` detection, accessibility warnings, and performance ratings
-- **Themes** — save, load, and manage font theme presets via localStorage
-- **About** — author info and project links
-
-<p align="center">
-  <img src=".github/assets/pairings.png" alt="Font pairings" width="380" />
-  <img src=".github/assets/analytics.png" alt="Font analytics" width="380" />
-</p>
-
-<p align="center">
-  <img src=".github/assets/themes.png" alt="Theme presets" width="380" />
-  <img src=".github/assets/about.png" alt="About" width="380" />
-</p>
+<table>
+  <tr>
+    <td align="center">
+      <img src=".github/assets/detected.png" alt="Detected tab" width="340" /><br />
+      <strong>Detected</strong><br />
+      <sub>Fonts found via document.fonts, computed styles, and @font-face rules</sub>
+    </td>
+    <td align="center">
+      <img src=".github/assets/selected.png" alt="Selected tab" width="340" /><br />
+      <strong>Selected</strong><br />
+      <sub>Pick any element to inspect and edit its font properties live</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src=".github/assets/search.png" alt="Search tab" width="340" /><br />
+      <strong>Search</strong><br />
+      <sub>Search Google Fonts with live preview on hover, apply in one click</sub>
+    </td>
+    <td align="center">
+      <img src=".github/assets/pairings.png" alt="Pairings tab" width="340" /><br />
+      <strong>Pairings</strong><br />
+      <sub>Curated heading + body font pairing suggestions</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src=".github/assets/analytics.png" alt="Analytics tab" width="340" /><br />
+      <strong>Analytics</strong><br />
+      <sub>Font usage analysis, accessibility checks, and performance ratings</sub>
+    </td>
+    <td align="center">
+      <img src=".github/assets/themes.png" alt="Themes tab" width="340" /><br />
+      <strong>Themes</strong><br />
+      <sub>Save, load, and manage font theme presets</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <img src=".github/assets/about.png" alt="About tab" width="340" /><br />
+      <strong>About</strong><br />
+      <sub>Author info and project links</sub>
+    </td>
+  </tr>
+</table>
 
 ### Font Swapping
 
 Click any detected font to swap it with a Google Font. Swaps inject a `<link>` to load the font and a `<style>` with targeted `!important` overrides. Fully reversible.
 
+### Element Picker
+
+Click "Pick" in the panel header to activate a crosshair cursor. Click any element on the page to inspect its full CSS font properties, then edit them live.
+
 ### Font Preview on Hover
 
 Hovering over a search result loads the font from Google Fonts and shows a live preview with sample text at multiple sizes.
-
-### Element Picker
-
-Click "Pick" in the panel header to activate a crosshair cursor. Click any element on the page to capture its CSS selector and current font, then search for a replacement.
 
 ### Variable Font Support
 
@@ -110,10 +136,10 @@ Detected variable fonts show collapsible axis sliders (weight, width, slant, opt
 
 Click "Scan" in the Analytics tab for a deep analysis of every font on the page:
 
-- **Usage bars** — element count per font family
-- **Unused @font-face** — declared but never used font faces
-- **Accessibility checks** — warnings for thin weights on body text, small font sizes, and decorative fonts used for body copy
-- **Performance ratings** — estimated download size and green/amber/red badges based on variant count
+- **Usage bars** -- element count per font family
+- **Unused @font-face** -- declared but never used font faces
+- **Accessibility checks** -- warnings for thin weights on body text, small font sizes, and decorative fonts used for body copy
+- **Performance ratings** -- estimated download size and green/amber/red badges based on variant count
 
 ### Drag-and-Drop Local Fonts
 
@@ -171,9 +197,8 @@ This starts a stdio MCP server and a WebSocket bridge on `localhost:24242`. The 
 
 | Package | Description |
 |---------|-------------|
-| `@matthesketh/fontvibe` | Core library — panel, detection, swapping, MCP |
-| `vite-plugin-fontvibe` | Vite plugin — auto-injects FontVibe panel in dev mode |
-| `@matthesketh/fontvibe-extension` | Browser extension (MV3) — FontVibe on any website |
+| `fontvibe` | Core library -- panel, detection, swapping, MCP |
+| `vite-plugin-fontvibe` | Vite plugin -- auto-injects FontVibe panel in dev mode |
 
 ## API
 
@@ -204,7 +229,7 @@ import {
   exportThemes,
   importThemes,
   fetchFigmaFonts,
-} from '@matthesketh/fontvibe';
+} from 'fontvibe';
 ```
 
 ### Config options
@@ -242,7 +267,7 @@ import type {
   HistoryEntry,
   FontTheme,
   FigmaFontUsage,
-} from '@matthesketh/fontvibe';
+} from 'fontvibe';
 ```
 
 ## CLI
@@ -257,7 +282,7 @@ fontvibe mcp     Start MCP server with WebSocket bridge
 Import font usage from any Figma file:
 
 ```ts
-import { fetchFigmaFonts } from '@matthesketh/fontvibe';
+import { fetchFigmaFonts } from 'fontvibe';
 
 const fonts = await fetchFigmaFonts('your-file-key', 'your-figma-token');
 // [{ family: 'Inter', style: 'Regular', nodeCount: 42 }, ...]
@@ -279,12 +304,13 @@ The browser extension bundles FontVibe as a content script that works on any web
 ```bash
 npm install
 npm run build
-npm run dev     # watch mode
+npm run dev     # dev server with live panel
+npm test        # run tests
 ```
 
 ## Author
 
-**Matt Hesketh** — [GitHub](https://github.com/wrxck)
+**Matt Hesketh** -- [GitHub](https://github.com/wrxck)
 
 ## License
 
