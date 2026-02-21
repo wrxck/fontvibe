@@ -4,10 +4,10 @@ import { componentStyles } from './styles-components.js';
 
 export function getPanelStyles(position: PanelPosition): string {
   const posMap: Record<PanelPosition, string> = {
-    'bottom-right': 'bottom: 16px; right: 16px;',
-    'bottom-left': 'bottom: 16px; left: 16px;',
-    'top-right': 'top: 16px; right: 16px;',
-    'top-left': 'top: 16px; left: 16px;',
+    'bottom-right': 'bottom: 16px; right: 16px; flex-direction: column-reverse; align-items: flex-end;',
+    'bottom-left': 'bottom: 16px; left: 16px; flex-direction: column-reverse; align-items: flex-start;',
+    'top-right': 'top: 16px; right: 16px; flex-direction: column; align-items: flex-end;',
+    'top-left': 'top: 16px; left: 16px; flex-direction: column; align-items: flex-start;',
   };
 
   return `
@@ -15,8 +15,10 @@ export function getPanelStyles(position: PanelPosition): string {
       all: initial;
       position: fixed;
       ${posMap[position]}
+      display: flex;
+      gap: 8px;
       z-index: 2147483647;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 14px;
       color: #e1e1e1;
     }

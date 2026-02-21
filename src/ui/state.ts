@@ -14,6 +14,7 @@ let state: FontVibeState = {
   loading: false,
   pickerActive: false,
   pickerSelector: null,
+  pickedElement: null,
   canUndo: false,
   canRedo: false,
 };
@@ -43,6 +44,7 @@ export function resetState(): void {
     loading: false,
     pickerActive: false,
     pickerSelector: null,
+    pickedElement: null,
     canUndo: false,
     canRedo: false,
   };

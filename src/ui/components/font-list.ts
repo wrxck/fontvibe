@@ -22,7 +22,7 @@ export function renderFontList(
     const varInfo = variableFonts?.find(v => v.family === font.family);
     const axisHtml = varInfo ? `
       <details style="margin-top: 4px;">
-        <summary style="font-size: 11px; color: #6c63ff; cursor: pointer;">variable axes</summary>
+        <summary style="font-size: 11px; color: #FCE205; cursor: pointer;">variable axes</summary>
         ${varInfo.axes.map(axis => `
           <div class="fv-variable-axis">
             <label>
