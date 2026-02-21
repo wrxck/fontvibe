@@ -2,7 +2,7 @@ import type { PickedElementInfo } from '../../core/types.js';
 
 export function renderSelectedTab(info: PickedElementInfo | null): string {
   if (!info) {
-    return `<div class="fv-empty">Click "Pick" in the header, then click any element on the page to inspect its font properties.</div>`;
+    return `<div class="fv-empty" style="color: #FCE205;">Click "Pick" in the header, then click any element on the page to inspect its font properties.</div>`;
   }
 
   const preview = info.textContent.length > 80
@@ -23,7 +23,7 @@ export function renderSelectedTab(info: PickedElementInfo | null): string {
     .join('');
 
   return `
-    <div class="fv-selected-preview" data-fv-selected-preview style="font-family: ${info.fontFamily}; font-size: ${info.fontSize}; font-weight: ${info.fontWeight}; font-style: ${info.fontStyle}; line-height: ${info.lineHeight}; letter-spacing: ${info.letterSpacing}; color: ${info.color};">
+    <div class="fv-selected-preview" data-fv-selected-preview style="font-family: ${info.fontFamily}; font-size: ${info.fontSize}; font-weight: ${info.fontWeight}; font-style: ${info.fontStyle}; line-height: ${info.lineHeight}; letter-spacing: ${info.letterSpacing}; color: #FCE205;">
       ${escapeHtml(preview)}
     </div>
 
