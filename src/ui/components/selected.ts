@@ -23,7 +23,7 @@ export function renderSelectedTab(info: PickedElementInfo | null): string {
     .join('');
 
   return `
-    <div class="fv-selected-preview" data-fv-selected-preview style="font-family: ${info.fontFamily}; font-size: ${info.fontSize}; font-weight: ${info.fontWeight}; font-style: ${info.fontStyle}; line-height: ${info.lineHeight}; letter-spacing: ${info.letterSpacing}; color: ${info.color};">
+    <div class="fv-selected-preview" data-fv-selected-preview style="font-family: ${info.fontFamily}; font-size: ${info.fontSize}; font-weight: ${info.fontWeight}; font-style: ${info.fontStyle}; line-height: ${info.lineHeight}; letter-spacing: ${info.letterSpacing}; color: #FCE205;">
       ${escapeHtml(preview)}
     </div>
 
