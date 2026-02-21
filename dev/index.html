@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FontVibe Dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;700&family=Fira+Code:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #f8f9fa;
+      padding: 2rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.4rem; margin: 2rem 0 0.75rem; color: #16213e; }
+    p { margin-bottom: 1rem; }
+    .serif { font-family: 'Playfair Display', serif; }
+    .mono  { font-family: 'Fira Code', monospace; }
+    pre {
+      font-family: 'Fira Code', monospace;
+      background: #1a1a2e;
+      color: #e2e8f0;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+  </style>
+</head>
+<body>
+  <h1>FontVibe Dev Playground</h1>
+  <p>This page loads three Google Fonts for the panel to detect and swap.</p>
+
+  <div class="card">
+    <h2>Sans-serif &mdash; Inter</h2>
+    <p>
+      The quick brown fox jumps over the lazy dog. FontVibe gives you instant
+      visibility into every font on the page: weights, sizes, selectors, and
+      element counts.
+    </p>
+    <p><strong>Bold weight:</strong> headings, buttons, and emphasis.</p>
+  </div>
+
+  <div class="card">
+    <h2 class="serif">Serif &mdash; Playfair Display</h2>
+    <p class="serif">
+      Typography is the craft of endowing human language with a durable visual
+      form. A well-chosen serif can lend authority and elegance to long-form
+      content, editorial layouts, and brand identities.
+    </p>
+    <p class="serif"><strong>Bold weight:</strong> article titles and pull quotes.</p>
+  </div>
+
+  <div class="card">
+    <h2 class="mono">Monospace &mdash; Fira Code</h2>
+    <pre>function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+
+const fonts = detectFonts();
+console.log(fonts.map(f => f.family));</pre>
+  </div>
+
+  <script type="module" src="./main.ts"></script>
+</body>
+</html>

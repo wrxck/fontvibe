@@ -19,6 +19,7 @@ import { detectVariableAxes, applyVariationSettings } from '../core/variable-fon
 import { pushHistory, undo, redo, getHistory } from './history.js';
 import { renderThemesTab } from './components/themes.js';
 import { renderAboutTab } from './components/about.js';
+import { renderSelectedTab } from './components/selected.js';
 import { saveTheme, listThemes, deleteTheme, getTheme } from '../core/themes.js';
 
 let analyticsReport: AnalyticsReport | null = null;
@@ -34,6 +35,16 @@ export function createPanel(config: FontVibeConfig): {
 } {
   const host = document.createElement('div');
   const shadow = host.attachShadow({ mode: 'open' });
+
+  // load IBM Plex Mono
+  const fontLinkId = 'fv-ibm-plex-mono';
+  if (!document.getElementById(fontLinkId)) {
+    const link = document.createElement('link');
+    link.id = fontLinkId;
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap';
+    document.head.appendChild(link);
+  }
 
   const style = document.createElement('style');
   style.textContent = getPanelStyles(config.position || 'bottom-right');
@@ -66,9 +77,14 @@ export function createPanel(config: FontVibeConfig): {
   });
 
   const unsubscribe = subscribe((state) => {
+    const tabs = shadow.querySelector('.fv-tabs') as HTMLElement | null;
+    const savedScroll = tabs ? tabs.scrollLeft : 0;
     panel.innerHTML = buildPanelHtml(state);
     panel.className = state.panelOpen ? 'fv-panel open' : 'fv-panel';
     if (config.persistSwaps) saveSwaps(state.activeSwaps);
+    setupTabArrows(shadow);
+    const newTabs = shadow.querySelector('.fv-tabs') as HTMLElement | null;
+    if (newTabs) newTabs.scrollLeft = savedScroll;
   });
 
   trigger.addEventListener('click', () => {
@@ -88,6 +104,7 @@ export function createPanel(config: FontVibeConfig): {
 
 function buildPanelHtml(state: FontVibeState): string {
   const detectedActive = state.activeTab === 'detected' ? 'active' : '';
+  const selectedActive = state.activeTab === 'selected' ? 'active' : '';
   const searchActive = state.activeTab === 'search' ? 'active' : '';
   const pairingsActive = state.activeTab === 'pairings' ? 'active' : '';
   const analyticsActive = state.activeTab === 'analytics' ? 'active' : '';
@@ -96,6 +113,8 @@ function buildPanelHtml(state: FontVibeState): string {
   let bodyContent: string;
   if (state.activeTab === 'detected') {
     bodyContent = renderFontList(state.detectedFonts, state.activeSwaps, detectVariableAxes());
+  } else if (state.activeTab === 'selected') {
+    bodyContent = renderSelectedTab(state.pickedElement);
   } else if (state.activeTab === 'search') {
     bodyContent = renderSearchTab(state.searchQuery, state.searchResults, state.loading);
   } else if (state.activeTab === 'analytics') {
@@ -118,17 +137,22 @@ function buildPanelHtml(state: FontVibeState): string {
     <div class="fv-header">
       <h3>FontVibe</h3>
       <div class="fv-header-actions">
-        <button class="fv-btn fv-btn-secondary fv-pick-btn${state.pickerActive ? ' active' : ''}" data-fv-pick title="Pick element">Pick</button>
-        <button class="fv-btn fv-btn-secondary" data-fv-tab="about" title="About FontVibe" style="padding: 4px 6px; font-size: 14px;">&#9432;</button>
+        <button class="fv-btn fv-btn-secondary fv-header-btn fv-pick-btn${state.pickerActive ? ' active' : ''}" data-fv-pick title="Pick element">Pick</button>
+        <button class="fv-btn fv-btn-secondary fv-header-btn" data-fv-tab="about" title="About FontVibe">&#9432;</button>
         <button class="fv-close" data-fv-close>&times;</button>
       </div>
     </div>
-    <div class="fv-tabs">
-      <button class="fv-tab ${detectedActive}" data-fv-tab="detected">Detected</button>
-      <button class="fv-tab ${searchActive}" data-fv-tab="search">Search</button>
-      <button class="fv-tab ${pairingsActive}" data-fv-tab="pairings">Pairings</button>
-      <button class="fv-tab ${analyticsActive}" data-fv-tab="analytics">Analytics</button>
-      <button class="fv-tab ${themesActive}" data-fv-tab="themes">Themes</button>
+    <div class="fv-tabs-wrap">
+      <button class="fv-tabs-arrow fv-tabs-arrow-left" data-fv-scroll-left>&#8249;</button>
+      <div class="fv-tabs">
+        <button class="fv-tab ${detectedActive}" data-fv-tab="detected">Detected</button>
+        <button class="fv-tab ${selectedActive}" data-fv-tab="selected">Selected</button>
+        <button class="fv-tab ${searchActive}" data-fv-tab="search">Search</button>
+        <button class="fv-tab ${pairingsActive}" data-fv-tab="pairings">Pairings</button>
+        <button class="fv-tab ${analyticsActive}" data-fv-tab="analytics">Analytics</button>
+        <button class="fv-tab ${themesActive}" data-fv-tab="themes">Themes</button>
+      </div>
+      <button class="fv-tabs-arrow fv-tabs-arrow-right" data-fv-scroll-right>&#8250;</button>
     </div>
     <div class="fv-body" data-fv-body>${bodyContent}</div>
     <div class="fv-footer">
@@ -155,6 +179,30 @@ function renderPairingsTab(): string {
   `).join('');
 }
 
+function setupTabArrows(shadow: ShadowRoot): void {
+  const tabs = shadow.querySelector('.fv-tabs') as HTMLElement | null;
+  const left = shadow.querySelector('.fv-tabs-arrow-left') as HTMLElement | null;
+  const right = shadow.querySelector('.fv-tabs-arrow-right') as HTMLElement | null;
+  if (!tabs || !left || !right) return;
+
+  const update = () => {
+    const canLeft = tabs.scrollLeft > 0;
+    const canRight = tabs.scrollLeft + tabs.clientWidth < tabs.scrollWidth - 1;
+    left.classList.toggle('visible', canLeft);
+    right.classList.toggle('visible', canRight);
+  };
+
+  tabs.addEventListener('scroll', update, { passive: true });
+  update();
+
+  left.addEventListener('click', () => {
+    tabs.scrollBy({ left: -120, behavior: 'smooth' });
+  });
+  right.addEventListener('click', () => {
+    tabs.scrollBy({ left: 120, behavior: 'smooth' });
+  });
+}
+
 function bindPanelEvents(shadow: ShadowRoot, config: FontVibeConfig): void {
   shadow.addEventListener('click', (e) => {
     const target = e.target as HTMLElement;
@@ -171,12 +219,25 @@ function bindPanelEvents(shadow: ShadowRoot, config: FontVibeConfig): void {
       } else {
         setState({ pickerActive: true });
         activatePicker((selector, font) => {
+          const el = document.querySelector(selector);
+          const cs = el ? getComputedStyle(el) : null;
+          const info = cs ? {
+            selector,
+            fontFamily: cs.fontFamily,
+            fontSize: cs.fontSize,
+            fontWeight: cs.fontWeight,
+            fontStyle: cs.fontStyle,
+            lineHeight: cs.lineHeight,
+            letterSpacing: cs.letterSpacing,
+            color: cs.color,
+            tagName: el!.tagName,
+            textContent: (el!.textContent || '').trim().slice(0, 200),
+          } : null;
           setState({
             pickerActive: false,
             pickerSelector: selector,
-            activeTab: 'search',
-            searchQuery: '',
-            searchResults: [],
+            pickedElement: info,
+            activeTab: 'selected',
           });
           shadow.host.setAttribute('data-fv-swap-target', font);
           shadow.host.setAttribute('data-fv-swap-selectors', selector);
@@ -375,6 +436,38 @@ function bindPanelEvents(shadow: ShadowRoot, config: FontVibeConfig): void {
       applyVariationSettings(family, { [tag]: Number(target.value) });
       const label = shadow.querySelector(`[data-fv-axis-value="${family}-${tag}"]`);
       if (label) label.textContent = target.value;
+    }
+  });
+
+  // selected element property editing
+  shadow.addEventListener('input', (e) => {
+    const target = e.target as HTMLInputElement | HTMLSelectElement;
+    const prop = target.dataset.fvEdit;
+    const selector = target.dataset.fvSelector;
+    if (!prop || !selector) return;
+
+    const value = target.value;
+    const els = document.querySelectorAll(selector);
+    els.forEach(el => {
+      (el as HTMLElement).style[prop as any] = prop === 'fontFamily' ? `'${value}', sans-serif` : value;
+    });
+
+    // update the live preview inside the panel
+    const preview = shadow.querySelector('[data-fv-selected-preview]') as HTMLElement | null;
+    if (preview) {
+      preview.style[prop as any] = prop === 'fontFamily' ? `'${value}', sans-serif` : value;
+    }
+
+    // update color label if color picker changed
+    if (prop === 'color') {
+      const label = target.closest('.fv-selected-color-wrap')?.querySelector('.fv-selected-color-label');
+      if (label) label.textContent = value;
+    }
+
+    // update pickedElement state so it persists across re-renders
+    const picked = getState().pickedElement;
+    if (picked) {
+      setState({ pickedElement: { ...picked, [prop]: prop === 'fontFamily' ? `'${value}', sans-serif` : value } });
     }
   });
 
